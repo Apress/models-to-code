@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>350</x>
+      <y>620</y>
+      <w>520</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>valign=top
+CONVERTING
+--
+DEVICE.Convert group( Converter: ID, Group: /R6/Conversion Group.ID)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>330</x>
+      <y>210</y>
+      <w>560</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>valign=top
+CONVERSION COMPLETE
+--
+ // The conversion is complete.
+ // Read out the points in the Sample
+ // Group, and update their values
+ 
+ cips ..= /R6/Conversion Group/R4/Continuous Input Point
+ cips.Update value( DEVICE.Read converted value( Converter: ID, Point: cips.ID ) )
+
+ Conversion done -&gt; /R6/Conversion Group
+
+ // Delete the relationship between
+ // Signal Converter and Conversion Group
+ !&amp;R6 /R6/Conversion Group
+
+ // Mark ourselves as available
+ Available.set
+ 
+ // Notify the R6 assigner that we are ready
+ Converter ready -&gt; /R6/assigner(me)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>520</y>
+      <w>140</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Converter assigned</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>730</x>
+      <y>520</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Conversion done</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>600</x>
+      <y>120</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>600</x>
+      <y>120</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+</diagram>

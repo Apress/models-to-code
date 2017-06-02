@@ -1,0 +1,77 @@
+<authorgroup>
+  <author>
+    <firstname>Leon</firstname>
+    <surname>Starr</surname>
+  </author>
+  <author>
+    <firstname>Andrew</firstname>
+    <surname>Mangogna</surname>
+  </author>
+  <author>
+    <firstname>Stephen</firstname>
+    <surname>Mellor</surname>
+  </author>
+</authorgroup>
+<copyright>
+  <year>2017</year>
+  <holder>
+      Leon Starr,
+      Andrew Mangogna and
+      Stephen Mellor
+  </holder>
+</copyright>
+
+<legalnotice>
+    <title>
+        Legal Notices and Information
+    </title>
+    <para>
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+    </para>
+    <para>
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+    </para>
+    <para>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </para>
+</legalnotice>
+
+<revhistory>
+  <revision>
+    <revnumber>1.0</revnumber>
+    <date>September 13, 2016</date>
+    <authorinitials>GAM</authorinitials>
+    <revremark>
+      Initial draft.
+    </revremark>
+  </revision>
+  <revision>
+    <revnumber>1.1</revnumber>
+    <date>October 10, 2016</date>
+    <authorinitials>GAM</authorinitials>
+    <revremark>
+      Rework to adapt to naming convention and class name changes.
+    </revremark>
+  </revision>
+  <revision>
+    <revnumber>1.2</revnumber>
+    <date>March 24, 2017</date>
+    <authorinitials>GAM</authorinitials>
+    <revremark>
+        Clean up for release as supplementary material to
+        Models to Code.
+    </revremark>
+  </revision>
+</revhistory>

@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>150</x>
+      <y>0</y>
+      <w>230</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Start injection
+--
+SIO.Inject
+Wait for inject pressure -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>20</x>
+      <y>140</y>
+      <w>400</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>BUILDING PRESSURE
+--
+if Pressure &gt; /R4/Injector Design.Min delivery pressure
+     Above inject pressure -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>70</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Wait for inject pressure</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>230</x>
+      <y>260</y>
+      <w>340</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>INJECTING AT PRESSURE
+--
+Good injection -&gt; me after
+    /R4/Injector Design.Good injection duration
+Injecting.set
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>210</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Above inject pressure</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>200</x>
+      <y>420</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Cancel injection
+--
+cancel Good injection -&gt; me
+Injection canceled -&gt; me
+Injecting.unset</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>440</x>
+      <y>420</y>
+      <w>300</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Completed good injection
+--
+SIO.Stop injecting
+Good injection -&gt; /R2/Autocycle Session
+Stopped -&gt; me
+Injecting.unset</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>350</y>
+      <w>50</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Stop</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>350</y>
+      <w>110</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Good injection</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>90</x>
+      <y>560</y>
+      <w>360</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Quit low pressure injection
+--
+SIO.Stop injecting
+Low pressure injection -&gt; /R2/Autocycle Session
+Stopped -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>170</x>
+      <y>210</y>
+      <w>50</w>
+      <h>370</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Stop</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;350.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>240</x>
+      <y>700</y>
+      <w>280</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>SLEEPING
+--
+Stop monitoring =&gt; SIO</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>630</y>
+      <w>80</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Stopped</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>510</y>
+      <w>80</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Stopped</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>490</y>
+      <w>140</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Injection cancelled</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>260</x>
+      <y>800</y>
+      <w>230</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Initiate monitoring
+--
+Start monitoring =&gt; SIO
+Monitor -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>740</y>
+      <w>80</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Wakeup</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>230</x>
+      <y>1050</y>
+      <w>270</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Set dissipation error
+--
+if not Dissipation error {
+    Dissipation error.set
+    ALARM.Dissipation error
+}
+Keep monitoring -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>860</y>
+      <w>70</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Monitor</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>950</y>
+      <w>190</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Above dissipation pressure</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>740</x>
+      <y>550</y>
+      <w>350</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Clear error and check interlock
+--
+if not Dissipation error
+    // Pressure was ok this cycle, kill the alarm
+    ALARM.Clear dissipation error
+Dissipation error.unset  //clear for next cycle
+if /R5/Machinery.Locked out
+    Locked out -&gt; me
+else
+    OK to start -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>710</y>
+      <w>440</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Start</panel_attributes>
+    <additional_attributes>10.0;230.0;420.0;230.0;420.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>720</y>
+      <w>100</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Stop</panel_attributes>
+    <additional_attributes>10.0;200.0;60.0;200.0;60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>620</y>
+      <w>280</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Locked out</panel_attributes>
+    <additional_attributes>260.0;20.0;10.0;20.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>40</y>
+      <w>640</w>
+      <h>530</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+OK to start</panel_attributes>
+    <additional_attributes>560.0;510.0;560.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>600</x>
+      <y>130</y>
+      <w>290</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Not enough pressure
+--
+cancel Good injection -&gt; me
+Wait for inject pressure -&gt; me
+Low injection pressure -&gt; /R3/Reservoir
+Injecting.unset</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>410</x>
+      <y>160</y>
+      <w>210</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Wait for inject pressure</panel_attributes>
+    <additional_attributes>190.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>220</y>
+      <w>220</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Below inject pressure</panel_attributes>
+    <additional_attributes>10.0;100.0;200.0;100.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>240</x>
+      <y>910</y>
+      <w>280</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>MONITORING
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>950</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Keep monitoring</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>830</x>
+      <y>1070</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>style=autoresize
+ALS Injector State Diagram
+Version 1.2.3 / Leon Starr</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>100</x>
+      <y>710</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>100</x>
+      <y>700</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+</diagram>

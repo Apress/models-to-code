@@ -1,0 +1,71 @@
+#*++
+# Copyright:
+#   Copyright 2017, by the authors of "Models to Code".
+#
+# Project:
+#   Models to Code Book
+#
+# Module:
+#   tack test harness configuration for ATC domain
+#*--
+
+Pycca ./atctrl.ral
+
+Domain atctrl {
+    Stub Cannot_handoff_to_self {
+        Param controller -> "char *"
+    }
+    Stub Unknown_controller {
+        Param controller -> "char *"
+    }
+    Stub Zone_not_handled_by_controller {
+        Param controller -> "char *"
+    }
+    Stub Control_Zones_Active {
+        Param atc -> "char *"
+    }
+    Stub Break_required {
+        Param station -> "char *"
+    }
+    Class Air_Traffic_Controller {
+        Attribute ID -> "char *"
+        Attribute Name -> "char *"
+        Attribute Rating -> "char *"
+
+        Event Ready_for_duty {
+            Param Station -> "char *"
+        }
+        Event Log_in {
+            Param Station -> "char *"
+        }
+        Event Cannot_go_on_duty
+        Event Logged_in
+        Event Handoff {
+            Param zone -> "char *"
+            Param controller -> "char *"
+        }
+        Event Ready_for_a_break
+        Event Off_duty
+        Event Log_out
+        Event Must_hand_off_zones
+    }
+    Class On_Duty_Controller {
+        Attribute Time_logged_in -> "long int"
+    }
+    Class Off_Duty_Controller {
+        Attribute Last_shift_ended -> "long int"
+    }
+    Class Control_Zone {
+        Attribute Name -> "char *"
+        Attribute Traffic -> unsigned
+    }
+    Class Duty_Station {
+        Attribute Number -> "char *"
+        Attribute Location -> "char *"
+        Attribute Capacity -> unsigned
+    }
+    Class Shift_Specification {
+        Attribute Min_break -> unsigned
+        Attribute Max_shift -> unsigned
+    }
+}

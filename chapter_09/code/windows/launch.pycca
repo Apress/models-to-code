@@ -1,0 +1,291 @@
+domain launch
+    interface prolog {
+        #include <stdint.h>
+        // Any additional interface includes, etc.
+        typedef uint8_t Torpedo_ID ;
+    }
+    implementation prolog {
+        #include "launch.h"
+        // Any additional implementation includes, etc.
+        typedef enum {
+            Passive,
+            Active
+        } L_type ;
+        typedef uint8_t Tube_number ;
+    }
+    external operation
+    MOTOR_start(
+        Torpedo_ID torpedo)
+    {
+    }
+    class Torpedo
+        attribute (Torpedo_ID ID)
+        attribute (bool Recalled) default {false}
+        reference R5 -> Torpedo_Spec
+        polymorphic event
+            Recall
+        end
+        
+        subtype R1 reference
+            Stored_Torpedo
+            Loaded_Torpedo
+            Fired_Torpedo
+        end
+        
+        instance operation
+        Recall()
+        {
+            self->Recalled = true ;
+            PYCCA_generatePolymorphic(Recall, Torpedo, self, self) ;
+        }
+    
+        population dynamic
+        slots 20
+    end
+    
+    class Torpedo_Spec
+        attribute (char const * Name)
+        attribute (L_type Launch_type)
+    
+        population static
+    end
+    
+    class Stored_Torpedo
+        reference R1 -> Torpedo
+        
+        reference R3 -> Storage_Rack
+        machine
+            state Installing_in_Rack(uint8_t rack) {
+                // Include your C code for the state here.
+            }
+            transition . - Assigned -> Installing_in_Rack
+            transition Installing_in_Rack - Installed -> STORED
+            state STORED() {
+                // Include your C code for the state here.
+            }
+            transition STORED - Load -> Migrating_to_Loaded
+            transition STORED - Recall -> Cancel_maintenance_interval
+            transition STORED - Request_maintenance_check -> MAINTENANCE
+            state MAINTENANCE() {
+                // Include your C code for the state here.
+            }
+            transition MAINTENANCE - Checks_out_ok -> STORED
+            transition MAINTENANCE - Failed_maintenance -> Removing
+            transition MAINTENANCE - Recall -> Removing
+            state Removing() {
+                // Include your C code for the state here.
+            }
+            final state Removing
+            state Migrating_to_Loaded(
+                Tube_number Number) {
+            
+                    // Get a reference to the superclass instance.
+                ClassRefVar(Torpedo, torp) = self->R1 ;
+                    // Create an instance of Loaded Torpedo
+                ClassRefVar(Loaded_Torpedo, ltorp) = PYCCA_newInstance(Loaded_Torpedo) ;
+                    // Relate the Loaded Torpedo to the Torpedo across R1.
+                PYCCA_relateSubtypeByRef(torp, Torpedo, R1, ltorp, Loaded_Torpedo) ;
+                ltorp->R1 = torp ;
+                    // Relate the Loaded Torpedo to the Tube.
+                ltorp->R4 = PYCCA_refOfId(Tube, rcvd_evt->Number) ;
+            
+                    // Now handle R2
+                switch (torp->R5->Launch_type) {
+                    case Active: {
+                            // For Active Launch Torpedos, create a new instance.
+                        ClassRefVar(Active_Launch_Torpedo, altorp) =
+                            PYCCA_newInstance(Active_Launch_Torpedo) ;
+                            // Relate the Active Launch Torpedo across R2.
+                        PYCCA_relateSubtypeByRef(ltorp, Loaded_Torpedo, R2, altorp,
+                                Active_Launch_Torpedo) ;
+                        altorp->R2 = ltorp ;
+                    }
+                    break ;
+                    case Passive: {
+                            // For Passive Launch Torpedos, create a new instance.
+                        ClassRefVar(Passive_Launch_Torpedo, pltorp) =
+                            PYCCA_newInstance(Passive_Launch_Torpedo) ;
+                            // Relate the Passive Launch Torpedo across R2.
+                        PYCCA_relateSubtypeByRef(ltorp, Loaded_Torpedo, R2, pltorp,
+                                Passive_Launch_Torpedo) ;
+                        pltorp->R2 = ltorp ;
+                    }
+                    break ;
+                }
+            
+                // Since this is final state, the Stored Torpedo instance is
+                // deleted and since there were no references in Storage Rack back
+                // to the Stored Torpedo, we don't have to destroy the instance
+                // of the R3 association.
+            }
+            final state Migrating_to_Loaded
+            state Cancel_maintenance_interval() {
+                // Include your C code for the state here.
+            }
+            transition Cancel_maintenance_interval - Maintence_canceled -> Removing
+        end
+    
+        population dynamic
+        slots 20
+    end
+    
+    class Storage_Rack
+        attribute (unsigned Number)
+    end
+    
+    class Loaded_Torpedo
+        reference R1 -> Torpedo
+        
+        reference R4 -> Tube
+        polymorphic event
+            Fire
+            Cleared_tube
+        end
+        
+        subtype R2 reference
+            Passive_Launch_Torpedo
+            Active_Launch_Torpedo
+        end
+        
+    
+        population dynamic
+        slots 8
+    end
+    
+    class Tube
+        attribute (Tube_number Number)
+        attribute (bool Flooded) default {false}
+    
+        population static
+    end
+    
+    class Fired_Torpedo
+        reference R1 -> Torpedo
+    
+        machine
+            state CLEARING_SUB() {
+                // Include your C code for the state here.
+            }
+            transition CLEARING_SUB - Recall -> Lost
+            transition CLEARING_SUB - Cleared_tube -> Arming
+            state Arming() {
+                // Include your C code for the state here.
+            }
+            transition Arming - Recall_requested -> Lost
+            transition Arming - Armed -> SEEKING_TARGET
+            state SEEKING_TARGET() {
+                // Include your C code for the state here.
+            }
+            transition SEEKING_TARGET - Recall -> Disarming
+            transition SEEKING_TARGET - Tracking -> TARGET_ACQUIRED
+            state TARGET_ACQUIRED() {
+                // Include your C code for the state here.
+            }
+            transition TARGET_ACQUIRED - Recall -> Disarming
+            transition TARGET_ACQUIRED - Missed -> Disarming
+            transition TARGET_ACQUIRED - Contact -> Exploded
+            transition TARGET_ACQUIRED - Lost_track -> SEEKING_TARGET
+            state Disarming() {
+                // Include your C code for the state here.
+            }
+            transition Disarming - Disarmed -> Lost
+            state Exploded() {
+                // Include your C code for the state here.
+            }
+            final state Exploded
+            state Lost() {
+                // Include your C code for the state here.
+            }
+            final state Lost
+        end
+    
+        population dynamic
+        slots 20
+    end
+    
+    class Passive_Launch_Torpedo
+        reference R2 -> Loaded_Torpedo
+        
+        machine
+            state LOADED() {
+                // Include your C code for the state here.
+            }
+            transition LOADED - Recall -> LAUNCH_LOCK
+            transition LOADED - Fire -> EXPELLING
+            state LAUNCH_LOCK() {
+                // Include your C code for the state here.
+            }
+            transition LAUNCH_LOCK - Unloaded -> Deleting
+            state Deleting() {
+                // Include your C code for the state here.
+            }
+            final state Deleting
+            state EXPELLING() {
+                // Include your C code for the state here.
+            }
+            transition EXPELLING - Cleared_tube -> Migrating_to_Fired
+            state Migrating_to_Fired() {
+                // Include your C code for the state here.
+            }
+            
+            final state Migrating_to_Fired
+        end
+    
+        population dynamic
+        slots 8
+    end
+    
+    class Active_Launch_Torpedo
+        reference R2 -> Loaded_Torpedo
+        machine
+            state LOADED() {
+                // Include your C code for the state here.
+            }
+            transition LOADED - Recall -> LAUNCH_LOCK
+            transition LOADED - Fire -> ESCAPING_TUBE
+            state LAUNCH_LOCK() {
+                // Include your C code for the state here.
+            }
+            transition LAUNCH_LOCK - Unloaded -> Deleting
+            state Deleting() {
+                // Include your C code for the state here.
+            }
+            final state Deleting
+            state ESCAPING_TUBE() {
+                // Include your C code for the state here.
+            }
+            transition ESCAPING_TUBE - Cleared_tube -> Migrating_to_Fired
+            state Migrating_to_Fired() {
+                // Include your C code for the state here.
+            }
+            
+            final state Migrating_to_Fired
+        end
+    
+        population dynamic
+        slots 8
+    end
+    table
+        Torpedo_Spec    (char const * Name)     (L_type Launch_type)
+        @active         {"Active"}              {Active}
+        @passive        {"Passive"}             {Passive}
+    end
+    table
+        Storage_Rack    (unsigned Number)
+        @sr1            {1}
+        @sr2            {2}
+        @sr3            {3}
+        @sr4            {4}
+        @sr5            {5}
+        @sr6            {6}
+        @sr7            {7}
+        @sr8            {8}
+    end
+    table
+        Tube            (Tube_number Number)
+        @tb1            {1}
+        @tb2            {2}
+        @tb3            {3}
+        @tb4            {4}
+    end
+end

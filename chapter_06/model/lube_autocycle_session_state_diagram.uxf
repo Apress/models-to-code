@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1440</x>
+      <y>400</y>
+      <w>288</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Spawn new session
+--
+New session( in.Schedule, 
+    Injector: /R2/Injector.ID ) -&gt; Autocycle Session
+ // This event will create, and be delivered to,
+ // a new instance of Autocycle Session to replace
+ // this one being deleted.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>224</x>
+      <y>0</y>
+      <w>184</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+New session( Schedule, Injector )</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>224</x>
+      <y>0</y>
+      <w>16</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>24</x>
+      <y>40</y>
+      <w>408</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Creating
+--
+ // Link Schedule and Injector together to create this instance
+Lubrication Schedule( Name: in.Schedule ) &amp;R2 Injector( ID: in.Injector )
+
+Created -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1560</x>
+      <y>304</y>
+      <w>160</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Change schedule( Schedule )</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>0</x>
+      <y>176</y>
+      <w>1632</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>NOT ACTIVE
+--
+Deactivated =&gt; UI
+
+Continuous operation = /R2/Lubrication Schedule.Default continuous operation
+Cycles requested = /R2/Cycle Schedule.Default max cycles
+Lubricating.unset
+Active.unset
+Deactivate.unset
+Suspend requested.unset // for transit from Count cycle or elsewhere</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1568</x>
+      <y>544</y>
+      <w>16</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>type=final</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1568</x>
+      <y>504</y>
+      <w>24</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>24</x>
+      <y>384</y>
+      <w>376</w>
+      <h>256</h>
+    </coordinates>
+    <panel_attributes>Initialize
+--
+if /R2/R5/Machinery.Locked out{
+     App Error( Msg: “Machinery lockout active” ) =&gt; APP
+     Locked out -&gt; me
+} else {
+    if in.Count // keep Schedule default if zero
+        Cycles requested = in.Count
+    Continuous operation = in.Continuous
+    Cycles since activation = 0
+    Failed cycles = 0
+
+    Wait time remaining = /R2/Lubrication Schedule.Wait interval
+    // The remaining interval starts out as the wait interval
+    // but, later, it may be less if the cycle is resumed after
+    // a suspension.
+
+    Active.set
+    Activated -&gt; self
+}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>216</x>
+      <y>104</y>
+      <w>56</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Created</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>392</x>
+      <y>304</y>
+      <w>88</w>
+      <h>296</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Locked out</panel_attributes>
+    <additional_attributes>10.0;350.0;90.0;350.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>80</x>
+      <y>680</y>
+      <w>328</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>WAIT INTERVAL
+--
+if Deactivate
+    Deactivate -&gt; me
+else {
+    Get ready to lubricate -&gt; me after Wait time remaining
+    if Suspend requested
+        Suspend -&gt; me
+}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>224</x>
+      <y>632</y>
+      <w>64</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Activated</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>664</x>
+      <y>728</y>
+      <w>328</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>WAIT SUSPENDED
+--
+ // Pause the cycle and save the remaining interval time
+
+Wait time remaining = remaining Get ready to lubricate
+cancel Get ready to lubricate
+Suspend requested.unset</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>744</y>
+      <w>280</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Suspend</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>768</y>
+      <w>280</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Resume</panel_attributes>
+    <additional_attributes>330.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>304</y>
+      <w>72</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Deactivate</panel_attributes>
+    <additional_attributes>10.0;530.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>512</x>
+      <y>560</y>
+      <w>216</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Cancel wait interval
+--
+cancel Get ready to lubricate -&gt; me
+Wait interval canceled -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>608</y>
+      <w>248</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Deactivate</panel_attributes>
+    <additional_attributes>10.0;140.0;290.0;140.0;290.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>304</y>
+      <w>128</w>
+      <h>272</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Wait interval canceled</panel_attributes>
+    <additional_attributes>10.0;320.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>80</x>
+      <y>848</y>
+      <w>328</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>MONITOR INTERVAL
+--
+Lubricate -&gt; me after /R2/Lubrication Schedule.Monitor interval
+Wakeup -&gt; /R2/Injector
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>792</y>
+      <w>128</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Get ready to lubricate</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>48</x>
+      <y>976</y>
+      <w>408</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>LUBE INTERVAL
+--
+Start -&gt; /R2/Injector
+Lube interval ended -&gt; me after /R2/R4/Injector Design.Delivery window
+Lubricating.set</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>920</y>
+      <w>64</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Lubricate</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>712</x>
+      <y>960</y>
+      <w>216</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>CANCELING LUBRICATION
+--
+cancel Lube interval ended -&gt; me
+Stop -&gt; /R2/Injector
+Lubricating.unset</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>448</x>
+      <y>984</y>
+      <w>280</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Deactivate</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>128</x>
+      <y>1112</y>
+      <w>216</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Normal lubrication
+--
+cancel Lube interval ended -&gt; me
+
+Count as normal -&gt; me
+Lubricating.unset</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>1048</y>
+      <w>88</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Good injection</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>544</x>
+      <y>1112</y>
+      <w>176</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>LOW PRESSURE LUBRICATION
+--
+Stop -&gt; /R2/Injector
+++ Failed cycles
+Lubricating.unset</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>448</x>
+      <y>1016</y>
+      <w>184</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Lube interval ended</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0;210.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>784</x>
+      <y>1208</y>
+      <w>176</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Interrupted cycle count
+--
+++ Failed cycles
+Cycle interrupted -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>856</x>
+      <y>1032</y>
+      <w>128</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Low pressure injection</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>168</x>
+      <y>1272</y>
+      <w>504</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>Count cycle
+--
+++ Cycles since activation
+
+if Failed cycles &gt;= /R2/Lubrication Schedule.Max low lube cycles
+    Too many low lube cycles -&gt; /R2/Injector.Reservoir
+
+if not Deactivate and (Continuous operation or Cycles since activation &lt; Cycles requested)
+    Next cycle -&gt; me
+else
+    Stop -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>304</x>
+      <y>1184</y>
+      <w>104</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Count as normal</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>608</x>
+      <y>1184</y>
+      <w>128</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Low pressure injection</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>664</x>
+      <y>1280</y>
+      <w>296</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Cycle interrupted</panel_attributes>
+    <additional_attributes>250.0;10.0;250.0;100.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>664</x>
+      <y>1032</y>
+      <w>184</w>
+      <h>304</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Good injection</panel_attributes>
+    <additional_attributes>130.0;10.0;130.0;360.0;10.0;360.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>736</y>
+      <w>184</w>
+      <h>640</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Next cycle</panel_attributes>
+    <additional_attributes>210.0;780.0;10.0;780.0;10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>664</x>
+      <y>304</y>
+      <w>752</w>
+      <h>1128</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Stop</panel_attributes>
+    <additional_attributes>10.0;1390.0;920.0;1390.0;910.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>896</x>
+      <y>840</y>
+      <w>200</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>Cancel monitor interval
+--
+cancel Lubricate -&gt; me
+Stop -&gt; /R2/Injector
+Monitor interval canceled -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>888</y>
+      <w>128</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Suspend</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>512</x>
+      <y>888</y>
+      <w>184</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>MONITOR SUSPENDED
+--
+cancel Lubricate -&gt; me
+Stop -&gt; /R2/Injector
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>856</y>
+      <w>512</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Deactivate</panel_attributes>
+    <additional_attributes>10.0;20.0;620.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>352</x>
+      <y>920</y>
+      <w>176</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Resume</panel_attributes>
+    <additional_attributes>200.0;30.0;10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>688</x>
+      <y>304</y>
+      <w>656</w>
+      <h>640</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Deactivate</panel_attributes>
+    <additional_attributes>10.0;780.0;800.0;780.0;790.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1088</x>
+      <y>304</y>
+      <w>176</w>
+      <h>600</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+
+
+Monitor interval canceled</panel_attributes>
+    <additional_attributes>10.0;710.0;200.0;710.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>224</x>
+      <y>304</y>
+      <w>160</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Activate( Continuous, Count )</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>448</x>
+      <y>1152</y>
+      <w>112</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Good injection</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1592</x>
+      <y>1352</y>
+      <w>208</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>ALS Autocycle Session State Diagram
+Version 1.2.3 / Leon Starr</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

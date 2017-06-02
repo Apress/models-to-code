@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Models to Code Source Files</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.79.1" /></head><body><div xml:lang="en" class="article" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idm1"></a>Models to Code Source Files</h2></div><div><h3 class="subtitle"><em>
+    Overview of Source Code Files
+</em></h3></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Andrew</span> <span class="surname">Mangogna</span></h3></div><div class="author"><h3 class="author"><span class="firstname">Stephen J.</span> <span class="surname">Mellor</span></h3></div><div class="author"><h3 class="author"><span class="firstname">Leon</span> <span class="surname">Starr</span></h3></div></div></div><div><p class="copyright">Copyright © 2017 
+    Leon Starr, Andrew Mangogna and Stephen Mellor
+  </p></div><div><div class="legalnotice"><a id="idm18"></a><p class="legalnotice-title"><strong>
+        Legal Notices and Information
+    </strong></p><p>
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+    </p><p>
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+    </p><p>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </p></div></div><div><div class="revhistory"><table style="border-style:solid; width:100%;" summary="Revision History"><tr><th align="left" valign="top" colspan="3"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 1.0</td><td align="left">April 15, 2017</td><td align="left">GAM</td></tr><tr><td align="left" colspan="3">
+      Initial release.
+    </td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_literate_programs">1.1. Literate Programs</a></span></dt></dl></dd><dt><span class="section"><a href="#_tools">2. Tools</a></span></dt><dd><dl><dt><span class="section"><a href="#_pycca">2.1. Pycca</a></span></dt><dt><span class="section"><a href="#_tack">2.2. Tack</a></span></dt><dt><span class="section"><a href="#_atangle">2.3. Atangle</a></span></dt></dl></dd><dt><span class="section"><a href="#_examples">3. Examples</a></span></dt><dd><dl><dt><span class="section"><a href="#_libtack">3.1. Libtack</a></span></dt><dt><span class="section"><a href="#_example_source_directories">3.2. Example Source Directories</a></span></dt><dt><span class="section"><a href="#_building_the_code_anchor_id_building_the_code_xreflabel_building_the_code">3.3. Building the Code </a></span></dt><dt><span class="section"><a href="#_building_the_documents_anchor_id_building_the_documents_xreflabel_building_the_documents">3.4. Building the Documents </a></span></dt></dl></dd></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p>This document is an overview of the source code files provided as part
+of the book, <span class="emphasis"><em>Models to Code</em></span>.
+<span class="emphasis"><em>Models to Code</em></span> contains several case study examples.
+In the interest of brevity,
+only portions of the examples are contained in the book itself.
+The completely worked out example code is given here.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_literate_programs"></a>1.1. Literate Programs</h3></div></div></div><p>The example code is presented as a literate program.
+This means that the source file contains both the descriptive documentation for
+the example as well as the <code class="literal">pycca</code> source code which implements the domain.
+The example source files are also valid
+<a class="ulink" href="http://www.methods.co.nz/asciidoc" target="_top">asciidoc</a> documents.
+A readable document, in many different formats (<span class="emphasis"><em>e.g.</em></span> PDF),
+can be generated from the source using <code class="literal">asciidoc</code>.
+The <code class="literal">pycca</code> source code that implements the model can be extracted from
+the literate program source file using a tool named,
+<a class="ulink" href="http://repos.modelrealization.com/cgi-bin/fossil/mrtools/wiki?name=asciidoc+literate+programming" target="_top">atangle</a>,
+which is included in this distribution.
+This process is discussed <a class="link" href="#building-the-code">below</a>.</p><p>For all of the examples,
+this source distribution provides both a PDF of the literate program document
+as well as all the extracted and generated source files.
+If you only wish to examine the example documents and code,
+it is not necessary to install any software.</p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_tools"></a>2. Tools</h2></div></div></div><p>All the tools included in here executables for the three major
+platforms are provided.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Linux
+</li><li class="listitem">
+MacOSX
+</li><li class="listitem">
+Windows
+</li></ul></div><pre class="literallayout">tools
+|-- linux
+|   |-- atangle
+|   |-- pycca
+|   `-- tack
+|-- macosx
+|   |-- atangle
+|   |-- pycca
+|   `-- tack
+`-- windows
+    |-- atangle.exe
+    |-- pycca.exe
+    `-- tack.exe</pre><p>The executables may be found under the <code class="literal">tools</code> directory.
+The tools are single file executables with no external dependencies.
+Installation means that you copy the file somewhere in
+your execution path.
+Removal is as simple as deleting the file.
+There is no separate installer program.
+Make sure of your installation by executing <code class="literal">pycca -version</code>
+in a command line window (of your favorite command interpreter shell).</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_pycca"></a>2.1. Pycca</h3></div></div></div><p>The <code class="literal">pycca</code> executable is included in this distribution under the <code class="literal">tools</code>
+directory.
+The source code for pycca is available from the either of the
+following repositories:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<a class="ulink" href="http://repos.modelrealization.com/cgi-bin/fossil/tcl-cm3/wiki?name=pycca" target="_top">Model Realization pycca</a>
+</li><li class="listitem">
+<a class="ulink" href="http://chiselapp.com/user/mangoa01/repository/tcl-cm3/wiki?name=pycca" target="_top">chiselapp pycca</a>
+</li></ul></div><p>These repositories are
+<a class="ulink" href="http://www.fossil-scm.org" target="_top">fossil</a> repositories.
+If you wish to explore the source code deeply, it is recommended that
+you install <code class="literal">fossil</code> and clone the repository.
+The fossil web site has all the necessary instructions.</p><p>The source code to the model execution domain that is used with
+pycca is also available from the same repositories.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<a class="ulink" href="http://repos.modelrealization.com/cgi-bin/fossil/tcl-cm3/wiki?name=STSA" target="_top">Model Realization ST/MX</a>
+</li><li class="listitem">
+<a class="ulink" href="http://chiselapp.com/user/mangoa01/repository/tcl-cm3/wiki?name=STSA" target="_top">chiselapp ST/MX</a>
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_tack"></a>2.2. Tack</h3></div></div></div><p>The <code class="literal">tack</code> program is a companion test harness generator for <code class="literal">pycca</code>
+generated domains.
+<code class="literal">Tack</code> is not discussed in the <span class="emphasis"><em>Models to Code</em></span> book, but is used here
+to make the build of the domain executables easier.
+The <code class="literal">tack</code> executable is include in this distribution.</p><p>The complete source code and description of <code class="literal">tack</code> is available in
+the following repositories:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<a class="ulink" href="http://repos.modelrealization.com/cgi-bin/fossil/tcl-cm3/wiki?name=Tack+Downloads" target="_top">Model Realization tack</a>
+</li><li class="listitem">
+<a class="ulink" href="http://chiselapp.com/user/mangoa01/repository/tcl-cm3/wiki?name=Tack+Downloads" target="_top">chiselapp tack</a>
+</li></ul></div><p>The primary use for <code class="literal">tack</code> here is to provide stubs for the
+external operations.
+The executables build using <code class="literal">tack</code> provide a local host socket interface
+that can be used to drive the harnessed domain.
+This is described in the <code class="literal">tack</code> manual, but we do not provide any
+examples here.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_atangle"></a>2.3. Atangle</h3></div></div></div><p>The <code class="literal">atangle</code> program is used to extract program “chunks” from
+the literate program source files.
+In our case, we use it to extract <code class="literal">pycca</code> source statements from
+the surrounding literate program description.
+Source code and documentation is available from the following repositories:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<a class="ulink" href="http://repos.modelrealization.com/cgi-bin/fossil/mrtools/wiki?name=asciidoc+literate+programming" target="_top">Model Realization atangle</a>
+</li><li class="listitem">
+<a class="ulink" href="http://chiselapp.com/user/mangoa01/repository/mrtools/wiki?name=asciidoc+literate+programming" target="_top">chiselapp atangle</a>
+</li></ul></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_examples"></a>3. Examples</h2></div></div></div><p>The included examples have been built to run in a POSIX environment.
+Executables for Linux, MacOSX and Windows using
+Cygwin<a href="#ftn.idm118" class="footnote" id="idm118"><sup class="footnote">[1]</sup></a>
+are included in this distribution.
+In addition,
+all intermediate files for the examples are also included.
+This includes, for example, the “C” files generated from <code class="literal">pycca</code>.
+The only intermediary files <span class="emphasis"><em>not</em></span> included are compiler generated
+object files.
+See <a class="link" href="#building-the-code">below</a> for more information about rebuilding
+the example programs.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_libtack"></a>3.1. Libtack</h3></div></div></div><p>The <code class="literal">libtack</code> directory contains both the files for the ST/MX run-time
+and those needed by the <code class="literal">tack</code> test harness generator.
+The contents of the <code class="literal">libtack</code> directory is shown below.
+All the example builds use the same <code class="literal">libtack</code> source files.</p><pre class="literallayout">libtack
+|-- harness.c
+|-- harness.h
+|-- libtack.a
+|-- Makefile
+|-- mechs.c
+|-- mechs.h
+|-- mechsIO.c
+|-- mechsIO.h
+|-- pycca_portal.c
+|-- pycca_portal.h
+`-- README.txt</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_example_source_directories"></a>3.2. Example Source Directories</h3></div></div></div><p>The layout of files for Chapter 4 is shown below.
+It is typical of the layout used for all other chapters.</p><pre class="literallayout">chapter_04
+|-- code
+|   |-- common
+|   |   |-- atcharness.tack
+|   |   `-- platform.c
+|   |-- linux
+|   |   |-- atc
+|   |   |-- atcharness.c
+|   |   |-- atcharness.h
+|   |   |-- atcharness.ral
+|   |   |-- atctrl.c
+|   |   |-- atctrl.h
+|   |   |-- atctrl.pycca
+|   |   |-- atctrl.ral
+|   |   `-- Makefile
+|   |-- macosx
+|   |   |-- atc
+|   |   |-- atcharness.c
+|   |   |-- atcharness.h
+|   |   |-- atctrl.c
+|   |   |-- atctrl.h
+|   |   |-- atctrl.pycca
+|   |   `-- Makefile
+|   `-- windows
+|       |-- atc.exe
+|       |-- atcharness.c
+|       |-- atcharness.h
+|       |-- atctrl.c
+|       |-- atctrl.h
+|       |-- atctrl.pycca
+|       `-- Makefile
+`-- model
+    |-- atc-states.pdf
+    |-- atc-states.uxf
+    |-- atctrl.aweb
+    |-- atctrl.pdf
+    |-- class-diagram.pdf
+    |-- class-diagram.uxf
+    |-- docinfo.xml
+    |-- duty-station-states.pdf
+    |-- duty-station-states.uxf
+    `-- Makefile</pre><p>The <code class="literal">code</code> subdirectory is divided between the three supported
+platforms and a set of files common to all platforms.
+Each plaform directory, <span class="emphasis"><em>e.g.</em></span> linux, contains an executable
+(in this case, <code class="literal">atc</code>) and the intermediary files used to build
+the executable.
+So, the <code class="literal">atctrl.pycca</code> file is the <code class="literal">pycca</code> source
+for the Air Traffic Control domain.
+It was obtained by extracting it from the domain workbook literate
+program source using <code class="literal">atangle</code>.
+The <code class="literal">atctrl.c</code> and <code class="literal">atctrl.h</code> files are
+the source and header file generated by <code class="literal">pycca</code>.
+Each platform directory contains all the necessary intermediary files
+and they those files were build using the platform specific version
+of the tool.
+The <code class="literal">Makefile</code> contain the build commands.</p><p>The <code class="literal">model</code> directory contains the literate program document
+for the example model.
+The PDF file there, <code class="literal">atctrl.pdf</code> in this case,
+contains the full xUML model and <code class="literal">pycca</code> implementation.
+The other files are typically graphics of the model.
+See <a class="link" href="#building-the-documents">below</a> for how the PDF for the literate program
+document is built.
+Files with <code class="literal">.uxf</code> suffix are
+<a class="ulink" href="http:://www.umlet.com" target="_top">UMLet</a> drawing files.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_building_the_code_anchor_id_building_the_code_xreflabel_building_the_code"></a>3.3. Building the Code <a id="building-the-code"></a></h3></div></div></div><p>Although executables and intermediary files are provided in this
+distribution,
+readers may wish to perform their build of the example programs.
+The custom tools specific to the translation technique are provided
+in the tools directory.</p><p>In a Linux environment,
+modern linux distributions include all the compilers and build tools
+needed to create the executable.
+For MacOSX,
+it is necessary to install <code class="literal">XCode</code>.
+<code class="literal">XCode</code> provides the necessary “C” compiler and <code class="literal">make</code>.
+For Windows,
+it is necessary to install
+<a class="ulink" href="http://www.cygwin.com" target="_top">Cygwin</a>.
+The 32-bit version is recommended as it has a more complete set of
+packages.
+The GNU compiler, <code class="literal">gcc</code>, and <code class="literal">make</code> are available from the cygwin repositories.
+A native Windows build using Microsoft tools is not supported in
+this distribution.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_building_the_documents_anchor_id_building_the_documents_xreflabel_building_the_documents"></a>3.4. Building the Documents <a id="building-the-documents"></a></h3></div></div></div><p>The domain workbook documents are valid
+<a class="ulink" href="http://www.methods.co.nz/asciidoc/index.html" target="_top">asciidoc</a>
+documents.
+For a modern Linux distribution,
+<code class="literal">asciidoc</code> is available in the distribution repositories.
+For MacOSX,
+<code class="literal">asciidoc</code> is available from one of the ports of GNU tools to MacOS,
+<span class="emphasis"><em>e.g.</em></span> MacPorts.
+For Windows,
+<code class="literal">asciidoc</code> is available from the cygwin repositories.</p><p>Note that the <code class="literal">asciidoc</code> tool chain is quite long and complicated.
+We build the domain workbook PDF’s using docbook output and <code class="literal">dblatex</code>
+as the backend formatter.
+This introduces a considerable number of dependencies to the PDF production.
+Some patience may be required to get all the pieces in place
+in the MacOS and Cygwin environments.
+For this reason, the formatted PDF’s are included.</p></div></div><div class="footnotes"><br /><hr style="width:100; text-align:left;margin-left: 0" /><div id="ftn.idm118" class="footnote"><p><a href="#idm118" class="simpara"><sup class="simpara">[1] </sup></a>It is necessary to have the cygwin libraries available
+to run the pre-built executable. There is no native Windows build
+included in the distribution</p></div></div></div></body></html>

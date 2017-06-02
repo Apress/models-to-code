@@ -1,0 +1,249 @@
+#*++
+# Copyright 2017 by Leon Starr, Andrew Mangogna and Stephen Mellor
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# Project:
+#   Models to Code Book
+#
+# Module:
+#   Tack harness file for Lube / SIO integrated application
+#*--
+
+Pycca ./lube.ral
+
+Domain lube {
+    Driver init
+    Driver Suspend_Autocycle_Session {
+        Param sessionId -> uint8_t
+    }
+    Driver Injector_max_pressure {
+        Param injId -> uint8_t
+    }
+    Driver Lock_Machinery {
+        Param machineId -> uint8_t
+    }
+    Driver Unlock_Machinery {
+        Param machineId -> uint8_t
+    }
+    Stub App_Error {
+        Param Msg -> "char *"
+    }
+    Stub UI_Deactivated {
+        Param sessionId -> "unsigned short"
+    }
+    Stub ALARM_Set_pressure_error {
+        Param injectorId -> "unsigned short"
+    }
+    Stub ALARM_Set_dissipation_error {
+        Param injectorId -> "unsigned short"
+    }
+    Stub ALARM_Clear_dissipation_error {
+        Param injectorId -> "unsigned short"
+    }
+    Stub ALARM_Set_lube_level_very_low {
+        Param reservoirId -> "unsigned short"
+    }
+    Stub ALARM_Clear_lube_level_very_low {
+        Param reservoirId -> "unsigned short"
+    }
+    Stub ALARM_Set_lube_level_low {
+        Param reservoirId -> "unsigned short"
+    }
+    Stub ALARM_Clear_lube_level_low {
+        Param reservoirId -> "unsigned short"
+    }
+    Stub ALARM_Set_lube_level_empty {
+        Param reservoirId -> "unsigned short"
+    }
+    Stub ALARM_Clear_lube_level_empty {
+        Param reservoirId -> "unsigned short"
+    }
+    Class Lubrication_Schedule {
+        Attribute Name -> "char *"
+        Attribute Wait_interval -> uint32_t
+        Attribute Monitor_interval -> uint32_t
+        Attribute Max_low_lube_cycles -> uint32_t
+        Attribute Default_continuous_operation -> uint8_t
+        Attribute Default_max_cycles -> uint32_t
+    }
+    Class Injector_Design {
+        Attribute Model -> "char *"
+        Attribute Min_delivery_pressure -> uint32_t
+        Attribute Max_system_pressure -> uint32_t
+        Attribute Max_dissipation_pressure -> uint32_t
+        Attribute Delivery_window -> uint32_t
+        Attribute Good_injection_duration -> uint32_t
+    }
+    Class Injector {
+        Attribute Pressure -> uint32_t
+        Attribute Dissipation_error -> uint8_t
+        Attribute Injecting -> uint8_t
+
+        Event Above_dissipation_pressure
+        Event Above_inject_pressure
+        Event Good_injection
+        Event Injection_canceled
+        Event Keep_monitoring
+        Event Locked_out
+        Event Monitor
+        Event OK_to_start
+        Event Start
+        Event Stop
+        Event Stopped
+        Event Wait_for_inject_pressure
+        Event Wakeup
+    }
+    Class Autocycle_Session {
+        Attribute Cycles_requested -> uint32_t
+        Attribute Continuous_operation -> uint8_t
+        Attribute Failed_cycles -> uint32_t
+        Attribute Cycles_since_activation -> uint32_t
+        Attribute Lubricating -> uint8_t
+        Attribute Active -> uint8_t
+        Attribute Deactivate -> uint8_t
+        Attribute Suspend_requested -> uint8_t
+        Attribute Wait_time_remaining -> uint32_t
+        Event Activate {
+            Param continuous -> uint8_t
+            Param count -> uint32_t
+        }
+        Event Activated
+        Event Change_schedule {
+            Param schedule -> {char const *}
+        }
+        Event Count_as_normal
+        Event Created
+        Event Cycle_interrupted
+        Event Deactivate
+        Event Get_ready_to_lubricate
+        Event Good_injection
+        Event Locked_out
+        Event Low_pressure_injection
+        Event Lube_interval_ended
+        Event Lubricate
+        Event Monitor_interval_canceled
+        Event Next_cycle
+        Event New_session {
+            Param schedule -> {char const *}
+            Param injector -> unsigned
+        }
+        Event Stop
+        Event Resume
+        Event Suspend
+        Event Wait_interval_canceled
+    }
+    Class Machinery {
+        Attribute Locked_out -> uint8_t
+    }
+    Class Reservoir {
+        Attribute Level -> uint8_t
+        Event Low_injection_pressure
+        Event Low_lube_level
+        Event Normal_lube_level
+        Event Too_many_low_lube_cycles
+    }
+}
+
+Pycca ./sio.ral
+
+Domain sio {
+    Driver init
+    Driver Read_point {
+        Param pid -> uint8_t
+        RetType sio_Point_Value -> int32_t
+    }
+    Driver Write_point {
+        Param pid -> uint8_t
+        Param value -> int32_t
+    }
+    Stub DEVICE_Write_reg {
+        Param pid -> uint8_t
+        Param value -> int32_t
+    }
+    Stub DEVICE_Enable_signal {
+        Param pid -> uint8_t
+    }
+    Stub DEVICE_Disable_signal {
+        Param pid -> uint8_t
+    }
+    Class IO_Point {
+    }
+    Class Discrete_Point {
+    }
+    Class Continuous_Point {
+    }
+    Class Packed_Point {
+        Attribute Length -> uint8_t
+        Attribute Offset -> uint8_t
+    }
+    Class Signalling_Point {
+        Attribute Value -> int32_t
+        Attribute Trigger -> uint8_t
+        Attribute Active_high -> uint8_t
+        Attribute Debounce_time -> uint32_t
+    }
+    Class Control_Point {
+        Attribute Memory_model -> uint8_t
+        Attribute Access -> uint8_t
+    }
+    Class Continuous_Output_Point {
+    }
+    Class Continuous_Input_Point {
+        Attribute Value -> int32_t
+    }
+    Class Point_Scaling {
+        Attribute Multiplier -> int32_t
+        Attribute Divisor -> int32_t
+        Attribute Intercept -> int32_t
+        Attribute Mask -> int32_t
+    }
+    Class Point_Threshold {
+        Attribute Limit -> int32_t
+        Attribute Direction -> uint8_t
+        Attribute Over_limit -> int
+        Attribute Under_limit -> int
+    }
+    Class Range_Limitation {
+        Attribute Over_count -> int
+        Attribute Under_count -> int
+        Event New_point {
+            Param pointValue -> int32_t
+        }
+        Event Out_of_range
+        Event In_range
+    }
+    Class Signal_Converter {
+        Attribute Converter_available -> bool
+        Event Converter_assigned
+        Event Conversion_done
+    }
+    Class Conversion_Group {
+        Attribute Waiting_for_converter -> bool
+        Attribute Period -> uint32_t
+        Event Sample
+        Event Stop
+        Event Conversion_done
+    }
+    Class R6_Assigner {
+        Event Group_ready
+        Event Converter_ready
+        Event Converter_assigned
+    }
+}

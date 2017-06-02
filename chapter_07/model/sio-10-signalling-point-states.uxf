@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>460</x>
+      <y>200</y>
+      <w>220</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>valign=top
+OFF
+--
+cancel Confirm-&gt;me
+DEVICE.Disable signal( PointID: ID )</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>80</x>
+      <y>350</y>
+      <w>260</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>valign=top
+ON
+--
+Value = DEVICE.Read reg(PointID: ID)
+Eval signal</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>170</x>
+      <y>210</y>
+      <w>310</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+On</panel_attributes>
+    <additional_attributes>290.0;20.0;10.0;20.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>260</y>
+      <w>210</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Off</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>370</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Trigger</panel_attributes>
+    <additional_attributes>10.0;20.0;100.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>430</x>
+      <y>350</y>
+      <w>280</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>valign=top
+DEBOUNCING
+--
+Confirm -&gt; me after Debounce time
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>820</x>
+      <y>340</y>
+      <w>260</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>valign=top
+CONFIRMING
+--
+status = DEV.Read reg(PointID: ID)
+if status != Value {
+    Value = status
+    Eval signal
+}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>360</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Confirm</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>280</y>
+      <w>50</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Off</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>390</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Trigger</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>670</x>
+      <y>230</y>
+      <w>310</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Off</panel_attributes>
+    <additional_attributes>270.0;110.0;270.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>530</y>
+      <w>470</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>halign=left
+Eval signal
+--
+if (Value == 1 AND Active high) OR (Value == 0 AND !Active high)
+    if Trigger is not .inactive
+        NOTIFY.Signal point( PointID: ID, isActive: true )
+else
+    if Trigger is not .active
+        NOTIFY.Signal point(PointID: ID, isActive: false )
+
+DEVICE.Enable signal(PointID: ID, Trigger )</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

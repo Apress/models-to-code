@@ -1,0 +1,102 @@
+Pycca ./sio.ral
+
+Domain sio {
+    Driver init
+    Driver Read_point {
+        Param pid -> uint8_t
+        RetType sio_Point_Value -> int32_t
+    }
+    Driver Write_point {
+        Param pid -> uint8_t
+        Param value -> int32_t
+    }
+    Stub NOTIFY_New_point_value {
+        Param point -> uint8_t
+        Param value -> int32_t
+    }
+    Stub NOTIFY_In_range {
+        Param point -> uint8_t
+        Param threshold -> uint8_t
+    }
+    Stub NOTIFY_Out_of_range {
+        Param point -> uint8_t
+        Param threshold -> uint8_t
+    }
+    Stub NOTIFY_Signal_point {
+        Param point -> uint8_t
+        Param isActive -> uint8_t
+    }
+    Stub DEVICE_Write_reg {
+        Param pid -> uint8_t
+        Param value -> int32_t
+    }
+    Stub DEVICE_Enable_signal {
+        Param pid -> uint8_t
+    }
+    Stub DEVICE_Disable_signal {
+        Param pid -> uint8_t
+    }
+    Class IO_Point {
+    }
+    Class Discrete_Point {
+    }
+    Class Continuous_Point {
+    }
+    Class Packed_Point {
+        Attribute Length -> uint8_t
+        Attribute Offset -> uint8_t
+    }
+    Class Signalling_Point {
+        Attribute Value -> int32_t
+        Attribute Trigger -> uint8_t
+        Attribute Active_high -> uint8_t
+        Attribute Debounce_time -> uint32_t
+    }
+    Class Control_Point {
+        Attribute Memory_model -> uint8_t
+        Attribute Access -> uint8_t
+    }
+    Class Continuous_Output_Point {
+    }
+    Class Continuous_Input_Point {
+        Attribute Value -> int32_t
+    }
+    Class Point_Scaling {
+        Attribute Multiplier -> int32_t
+        Attribute Divisor -> int32_t
+        Attribute Intercept -> int32_t
+        Attribute Mask -> int32_t
+    }
+    Class Point_Threshold {
+        Attribute Limit -> int32_t
+        Attribute Direction -> uint8_t
+        Attribute Over_limit -> int
+        Attribute Under_limit -> int
+    }
+    Class Range_Limitation {
+        Attribute Over_count -> int
+        Attribute Under_count -> int
+        Event New_point {
+            Param pointValue -> int32_t
+        }
+        Event Out_of_range
+        Event In_range
+    }
+    Class Signal_Converter {
+        Attribute Converter_available -> bool
+        Event Converter_assigned
+        Event Conversion_done
+    }
+    Class Conversion_Group {
+        Attribute Waiting_for_converter -> bool
+        Attribute Period -> uint32_t
+        Event Sample
+        Event Stop
+        Event Conversion_done
+    }
+    Class R6_Assigner {
+        Event Group_ready
+        Event Converter_ready
+        Event Converter_assigned
+    }
+}

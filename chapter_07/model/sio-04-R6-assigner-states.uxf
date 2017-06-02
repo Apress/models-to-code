@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>590</x>
+      <y>230</y>
+      <w>420</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>valign=top
+WAITING FOR GROUP
+--
+ // If any Conversion Group managed by this
+ // assigner (Signal Converter partition instance)
+ // is waiting, proceed
+  
+if /R5/Conversion Group( Waiting for converter )
+    Group ready -&gt; me  // this state machine instance</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>360</y>
+      <w>100</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Group ready</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>630</x>
+      <y>430</y>
+      <w>320</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>valign=top
+WAITING FOR CONVERTER
+--
+if Available // assigner's Signal Converter 
+    Converter ready -&gt; me</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>500</y>
+      <w>130</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Converter ready</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>590</x>
+      <y>570</y>
+      <w>420</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>valign=top
+Assigning Converter
+--
+ // Arbitrarily select one waiting Conversion Group 
+cgroup .=. /R5/Conversion Group( Waiting for converter )
+
+ // Link them together on R6
+/R6/Signal Converter &amp;R6 cgroup
+
+ // Make both instances as busy
+Available.unset
+cgroup.Waiting for converter.unset
+
+ // Proceed with the conversion
+Converter assigned -&gt; me
+Converter assigned -&gt; cgroup</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1000</x>
+      <y>290</y>
+      <w>200</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+Converter assigned</panel_attributes>
+    <additional_attributes>10.0;400.0;70.0;400.0;70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>790</x>
+      <y>140</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>790</x>
+      <y>140</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+</diagram>

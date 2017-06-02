@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>330</y>
+      <w>250</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>bg=yellow
+style=autoresize
+Lubrication Schedule
+--
+Name : Name  {I}
+Wait interval : Duration
+Monitor interval : Duration
+Max low lube cycles : Count
+Default continuous operation : Boolean
+Default max cycles : Count</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>470</y>
+      <w>250</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>bg=yellow
+style=autoresize
+Autocycle Session
+--
+Injector {I, R2}
+Schedule {R2}
+Cycles requested : Count = 0
+Continuous operation : Boolean = false
+Failed cycles : Count = 0
+Cycles since activation : Count = 0
+Lubricating : Boolean = false
+Active : Boolean = false
+Deactivate : Boolean = false
+Suspend requested : Boolean = false
+Wait time remaining : Seconds = 0
+--
+Deactivate()
+Suspend()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>250</x>
+      <y>330</y>
+      <w>520</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..*
+r1=is normally controlled by
+R1
+r2=controls timing by default</panel_attributes>
+    <additional_attributes>10.0;20.0;500.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>390</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>90</y>
+      <w>190</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>style=autoresize
+bg=yellow
+Reservoir
+--
+ID {I}
+Level : Fluid State = _normal</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>750</x>
+      <y>320</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>style=autoresize
+bg=yellow
+Injector
+--
+ID : ID  {I}
+Pressure : MPa = 0.0
+Dissipation error : Boolean = false
+Injecting : Boolean = false
+Default schedule {R1}
+Machinery {R5}
+Reservoir {R3}
+Model {R4}
+--
+Max system pressure()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>150</y>
+      <w>150</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+r1=gets lubricant from
+m2=1..*
+
+r2=supplies lubricant to
+R3</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>250</x>
+      <y>380</y>
+      <w>520</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+r1=is being controlled by
+m2=0..*
+r2=is timing control of
+R2</panel_attributes>
+    <additional_attributes>10.0;20.0;500.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1330</x>
+      <y>340</y>
+      <w>140</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>style=autoresize
+bg=yellow
+Machinery
+--
+ID : ID  {I}
+Locked out : Boolean
+--
+Lock()
+Unlock()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>960</x>
+      <y>360</y>
+      <w>390</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1..*
+r1=is lubricated by
+m2=1
+r2=lubricates
+R5</panel_attributes>
+    <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>650</y>
+      <w>220</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>style=autoresize
+bg=yellow
+Injector Design
+--
+Model : Model Name  {I}
+Min delivery pressure : MPa
+Max system pressure : MPa
+Max dissipation pressure : MPa
+Delivery window : Seconds
+Good injection duration : Seconds</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>480</y>
+      <w>240</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..*
+r1=defines operational parameters for
+m2=1
+r2=uses operational parameters in
+R4</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1180</x>
+      <y>600</y>
+      <w>190</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>ALS Class Diagram
+Version 1.2.2 / Leon Starr</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
