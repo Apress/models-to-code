@@ -439,7 +439,8 @@ domain sio
             PYCCA_forAllRelated(tdset, self, R7) {
                 ClassRefVar(Range_Limitation, td) = *tdset ;
                 MechEcb np = PYCCA_newEvent(New_point, Range_Limitation, td, self) ;
-                PYCCA_eventParam(np, Range_Limitation, New_point, pointValue) = value ;
+                PYCCA_eventParam(np, Range_Limitation, New_point, pointValue) =
+                    self->Value ;
                 PYCCA_postEvent(np) ;
             }
         }
